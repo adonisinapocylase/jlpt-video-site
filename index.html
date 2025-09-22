@@ -6,7 +6,7 @@
   <style>
     body { font-family: Arial, sans-serif; margin: 20px; background: #f4f4f9; }
     h1 { color: #333; }
-    video { width: 100%; max-width: 600px; margin-bottom: 10px; }
+    iframe { width: 100%; max-width: 600px; height: 340px; margin-bottom: 10px; }
     .subtitle { margin: 5px 0; padding: 5px; cursor: pointer; }
     .subtitle:hover { background: #ddd; }
     #meaning { margin-top: 20px; padding: 10px; background: #fff; border: 1px solid #ccc; }
@@ -15,11 +15,13 @@
 <body>
   <h1>JLPT Practice Video</h1>
 
-  <!-- Video Player -->
-  <video id="video" controls crossorigin="anonymous">
-    <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
-    <track label="Japanese" kind="subtitles" srclang="ja" src="subs/sample.vtt" default>
-  </video>
+  <!-- YouTube Video -->
+  <iframe id="ytplayer" 
+          src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
+          frameborder="0" 
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+          allowfullscreen>
+  </iframe>
 
   <h2>Subtitles (click a word):</h2>
   <div id="subs"></div>
@@ -30,7 +32,7 @@
     const subsDiv = document.getElementById("subs");
     const meaningDiv = document.getElementById("meaning");
 
-    // Load the VTT
+    // Load subtitles from VTT file
     fetch("subs/sample.vtt")
       .then(r => r.text())
       .then(text => {
@@ -50,7 +52,7 @@
         });
       });
 
-    // Simple dictionary (expand later with API)
+    // Small test dictionary
     const dict = {
       "今": "now",
       "日": "day/sun",
@@ -70,3 +72,4 @@
   </script>
 </body>
 </html>
+
