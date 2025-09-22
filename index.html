@@ -75,22 +75,22 @@
     function lookupWord(word) {
       meaningDiv.innerHTML = `<strong>Meaning:</strong> ${word} → ${dict[word] || "Not in dictionary yet"}`;
     }
-  <script>
+  ...
+<!-- Your other HTML above -->
+
+<script>
 async function loadDictionary() {
-  // Load the dictionary file we created in dict/n5.json
   const res = await fetch("dict/n5.json");
   return await res.json();
 }
 
 let dictionary = {};
 
-// Load the dictionary once site opens
 loadDictionary().then(dict => {
   dictionary = dict;
   console.log("Dictionary loaded:", dictionary);
 });
 
-// When a word is clicked in subtitle
 function lookupWord(word) {
   if (dictionary[word]) {
     document.getElementById("word-info").innerHTML = `
@@ -102,6 +102,8 @@ function lookupWord(word) {
   }
 }
 </script>
+</body>
+</html>
 </body>
 </html>
 
