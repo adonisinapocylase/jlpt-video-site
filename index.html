@@ -35,7 +35,7 @@
     const meaningDiv = document.getElementById("meaning");
 
     // Load subtitles from VTT file
-    fetch("subs/news1.vtt")
+    fetch("subs/n5lesson1.vtt")
       .then(r => r.text())
       .then(text => {
         const lines = text.split("\n").filter(l => l && !l.includes("-->") && l !== "WEBVTT");
