@@ -4,12 +4,13 @@
   <meta charset="UTF-8">
   <title>JLPT Learning Site</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 20px; background: #f4f4f9; }
+    <body> { font-family: Arial, sans-serif; margin: 20px; background: #f4f4f9; }
     h1 { color: #333; }
     iframe { width: 100%; max-width: 600px; height: 340px; margin-bottom: 10px; }
     .subtitle { margin: 5px 0; padding: 5px; cursor: pointer; }
     .subtitle:hover { background: #ddd; }
     #meaning { margin-top: 20px; padding: 10px; background: #fff; border: 1px solid #ccc; }
+   <div id="subtitles"></div> 
   </style>
 </head>
 <body>
@@ -52,6 +53,31 @@
             span.style.margin = "2px";
             span.style.cursor = "pointer";
             span.onclick = () => lookupWord(word);
+            // Example subtitles (later we’ll load from a .vtt file)
+const subtitleLines = [
+  "私 は 学生 です",
+  "日本 に 行きます"
+];
+
+// Display subtitles on page
+function showSubtitles() {
+  const container = document.getElementById("subtitles");
+  container.innerHTML = ""; // clear first
+  subtitleLines.forEach(line => {
+    const words = line.split(" ");
+    words.forEach(word => {
+      const span = document.createElement("span");
+      span.innerText = word;
+      span.onclick = () => lookupWord(word);
+      container.appendChild(span);
+      container.appendChild(document.createTextNode(" ")); // add space
+    });
+    container.appendChild(document.createElement("br")); // new line
+  });
+}
+
+// Run once page loads
+showSubtitles();
             div.appendChild(span);
           });
           subsDiv.appendChild(div);
