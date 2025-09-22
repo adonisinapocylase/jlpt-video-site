@@ -1,11 +1,72 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="ja">
 <head>
-  <meta charset="utf-8">
-  <title>JLPT Video Site</title>
+  <meta charset="UTF-8">
+  <title>JLPT Learning Site</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; background: #f4f4f9; }
+    h1 { color: #333; }
+    video { width: 100%; max-width: 600px; margin-bottom: 10px; }
+    .subtitle { margin: 5px 0; padding: 5px; cursor: pointer; }
+    .subtitle:hover { background: #ddd; }
+    #meaning { margin-top: 20px; padding: 10px; background: #fff; border: 1px solid #ccc; }
+  </style>
 </head>
 <body>
-  <h1>Hello JLPT!</h1>
-  <p>This is your first test page.</p>
+  <h1>JLPT Practice Video</h1>
+
+  <!-- Video Player -->
+  <video id="video" controls crossorigin="anonymous">
+    <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+    <track label="Japanese" kind="subtitles" srclang="ja" src="subs/sample.vtt" default>
+  </video>
+
+  <h2>Subtitles (click a word):</h2>
+  <div id="subs"></div>
+
+  <div id="meaning"><strong>Meaning:</strong> Click a word to see its meaning.</div>
+
+  <script>
+    const subsDiv = document.getElementById("subs");
+    const meaningDiv = document.getElementById("meaning");
+
+    // Load the VTT
+    fetch("subs/sample.vtt")
+      .then(r => r.text())
+      .then(text => {
+        const lines = text.split("\n").filter(l => l && !l.includes("-->") && l !== "WEBVTT");
+        lines.forEach(line => {
+          const div = document.createElement("div");
+          div.className = "subtitle";
+          line.split("").forEach(word => {
+            const span = document.createElement("span");
+            span.textContent = word;
+            span.style.margin = "2px";
+            span.style.cursor = "pointer";
+            span.onclick = () => lookupWord(word);
+            div.appendChild(span);
+          });
+          subsDiv.appendChild(div);
+        });
+      });
+
+    // Simple dictionary (expand later with API)
+    const dict = {
+      "今": "now",
+      "日": "day/sun",
+      "は": "topic marker",
+      "天": "sky/heaven",
+      "気": "mood/spirit/air",
+      "勉": "study",
+      "強": "strong",
+      "楽": "fun",
+      "し": "do",
+      "い": "good"
+    };
+
+    function lookupWord(word) {
+      meaningDiv.innerHTML = `<strong>Meaning:</strong> ${word} → ${dict[word] || "Not in dictionary yet"}`;
+    }
+  </script>
 </body>
 </html>
